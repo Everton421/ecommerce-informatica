@@ -60,7 +60,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <Link href={`/produto/${product.id}`}>
-          <h3 className="line-clamp-2 font-semibold leading-tight transition-colors hover:text-primary">
+          <h3 className="line-clamp-2 font-semibold leading-tight transition-colors hover:text-accent">
             {product.name}
           </h3>
         </Link>
@@ -78,12 +78,12 @@ export function ProductCard({ product }: ProductCardProps) {
             <span className="text-xs text-muted-foreground line-through">R$ {product.originalPrice.toFixed(2)}</span>
           )}
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-primary">R$ {product.price.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-accent">R$ {product.price.toFixed(2)}</span>
           </div>
           <span className="text-xs text-muted-foreground">ou 12x de R$ {(product.price / 12).toFixed(2)}</span>
         </div>
 
-        <Button className="w-full gap-2" size="sm" onClick={handleAddToCart}>
+        <Button className="w-full gap-2 bg-accent hover:bg-black" size="sm" onClick={handleAddToCart}>
           <ShoppingCart className="h-4 w-4" />
           Adicionar ao Carrinho
         </Button>

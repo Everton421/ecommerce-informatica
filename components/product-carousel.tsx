@@ -24,8 +24,8 @@ export function ProductCarousel({ title, description, products }: ProductCarouse
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">
-        <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
-        {description && <p className="text-muted-foreground leading-relaxed">{description}</p>}
+        <h2 className="text-3xl text-white font-bold tracking-tight">{title}</h2>
+        {description && <p className="text-white  leading-relaxed">{description}</p>}
       </div>
 
       <Carousel

@@ -206,7 +206,7 @@ getProducts()
   },[])
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-black">
       <HeroSection />
 
       <section className="container mx-auto px-4 py-12">
@@ -240,8 +240,8 @@ getProducts()
         <div className="container mx-auto px-4">
           <div className="grid gap-8 md:grid-cols-3">
             <div className="flex flex-col items-center text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                <svg className="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white">
+                <svg className="h-8 w-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -250,15 +250,15 @@ getProducts()
                   />
                 </svg>
               </div>
-              <h3 className="mb-2 text-lg font-semibold">Frete Grátis</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <h3 className="mb-2 text-white text-lg font-semibold">Frete Grátis</h3>
+              <p className="text-sm text-white  leading-relaxed">
                 Para compras acima de R$ 299 em todo o Brasil
               </p>
             </div>
 
             <div className="flex flex-col items-center text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                <svg className="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white">
+                <svg className="h-8 w-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -267,13 +267,13 @@ getProducts()
                   />
                 </svg>
               </div>
-              <h3 className="mb-2 text-lg font-semibold">Compra Segura</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">Ambiente 100% seguro com certificado SSL</p>
+              <h3 className="mb-2 text-lg font-semibold text-white ">Compra Segura</h3>
+              <p className="text-sm text-white leading-relaxed">Ambiente 100% seguro com certificado SSL</p>
             </div>
 
             <div className="flex flex-col items-center text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                <svg className="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white">
+                <svg className="h-8 w-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -282,8 +282,8 @@ getProducts()
                   />
                 </svg>
               </div>
-              <h3 className="mb-2 text-lg font-semibold">Parcele em até 12x</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">Sem juros no cartão de crédito</p>
+              <h3 className="mb-2 text-white font-semibold">Parcele em até 12x</h3>
+              <p className="text-sm text-white leading-relaxed">Sem juros no cartão de crédito</p>
             </div>
           </div>
         </div>

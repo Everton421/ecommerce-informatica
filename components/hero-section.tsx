@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+    <section className="relative overflow-hidden bg-gradient-to-br from-accent via-background to-secondary/10">
       <div className="container mx-auto px-4 py-20 md:py-32">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Text Content */}
@@ -16,17 +16,17 @@ export function HeroSection() {
             transition={{ duration: 0.5 }}
             className="flex flex-col gap-6"
           >
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary w-fit">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-accent w-fit">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
               </span>
               Ofertas Especiais
             </div>
 
             <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl text-balance">
               Tecnologia de Ponta para o Seu{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              <span className=" text-accent">
                 Setup Perfeito
               </span>
             </h1>
@@ -37,11 +37,11 @@ export function HeroSection() {
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="text-base">
+              <Button asChild size="lg" className="text-base bg-accent">
                 <Link href="#produtos">Ver Ofertas</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="text-base bg-transparent">
-                <Link href="/categoria/gamer">Setup Gamer</Link>
+              <Button asChild variant="outline" size="lg" className="text-base   bg-accent">
+                <Link href="/categoria/gamer" className="text-white">Setup Gamer</Link>
               </Button>
             </div>
 

@@ -9,6 +9,7 @@ const httpsAgent = new https.Agent({
 // Option 1: Apply to an Axios instance
 export const api = axios.create({
   httpsAgent,
+  baseURL:'https://localhost:3000'
 });
 
  
