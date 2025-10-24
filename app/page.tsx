@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section"
 import { ProductCarousel } from "@/components/product-carousel"
 import { api } from "@/services/api"
 import { useEffect, useState } from "react"
+import { productType } from "./@types/product-type"
 
 // Mock product data - will be replaced with real data later
 const featuredProducts = [
@@ -15,55 +16,7 @@ const featuredProducts = [
     category: "Periféricos",
     rating: 4.8,
     reviews: 234,
-  },
-  {
-    id: 2,
-    name: "Teclado Mecânico RGB",
-    price: 349.9,
-    originalPrice: 449.9,
-    image: "/mechanical-keyboard-rgb.jpg",
-    category: "Periféricos",
-    rating: 4.9,
-    reviews: 456,
-  },
-  {
-    id: 3,
-    name: "Headset Gamer 7.1",
-    price: 279.9,
-    image: "/gaming-headset.png",
-    category: "Gamer",
-    rating: 4.7,
-    reviews: 189,
-  },
-  {
-    id: 4,
-    name: 'Monitor 27" 144Hz',
-    price: 1299.9,
-    originalPrice: 1599.9,
-    image: "/gaming-monitor-27-inch.jpg",
-    category: "Monitores",
-    rating: 4.9,
-    reviews: 567,
-  },
-  {
-    id: 5,
-    name: "Webcam Full HD 1080p",
-    price: 299.9,
-    image: "/webcam-1080p.jpg",
-    category: "Periféricos",
-    rating: 4.6,
-    reviews: 123,
-  },
-  {
-    id: 6,
-    name: "SSD NVMe 1TB",
-    price: 449.9,
-    originalPrice: 599.9,
-    image: "/nvme-ssd.jpg",
-    category: "Hardware",
-    rating: 5.0,
-    reviews: 789,
-  },
+  } 
 ]
 
 const gamingProducts = [
@@ -187,7 +140,7 @@ const hardwareProducts = [
 
 export default function HomePage() {
   
-  const [ dataProducts, setDataProduct ] = useState();
+  const [ dataProducts, setDataProduct ] = useState<productType[]>();
 
   useEffect(()=>{
     async function getProducts(){
@@ -200,7 +153,6 @@ export default function HomePage() {
         }catch(err){
           console.log("Erro ao obter dados da api ", err)
         }
-
       }
 getProducts()
   },[])
@@ -210,10 +162,11 @@ getProducts()
       <HeroSection />
 
       <section className="container mx-auto px-4 py-12">
+
         <ProductCarousel
           title="Produtos em Destaque"
           description="Os melhores produtos com preços especiais"
-          products={featuredProducts}
+          products={dataProducts}
         />
       </section>
 
@@ -222,7 +175,7 @@ getProducts()
           <ProductCarousel
             title="Setup Gamer Completo"
             description="Tudo que você precisa para o seu setup"
-            products={gamingProducts}
+            products={dataProducts}
           />
         </div>
       </section>
@@ -231,7 +184,7 @@ getProducts()
         <ProductCarousel
           title="Hardware de Alta Performance"
           description="Componentes para montar ou fazer upgrade no seu PC"
-          products={hardwareProducts}
+          products={dataProducts}
         />
       </section>
 

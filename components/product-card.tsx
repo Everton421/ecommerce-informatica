@@ -6,35 +6,23 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
-
-interface Product {
-  id: number
-  name: string
-  price: number
-  originalPrice?: number
-  image: string
-  category: string
-  rating: number
-  reviews: number
-}
+import { productType } from "@/app/@types/product-type"
+ 
 
 interface ProductCardProps {
-  product: Product
+  product: productType
 }
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart()
 
-  const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0
-
+  const discount = 0;
   const handleAddToCart = () => {
     addItem({
       id: product.id,
       name: product.name,
-      price: product.price,
-      image: product.image,
+      price:Number( product.price),
+      image: product.imgs && product.imgs[0].imgUrl,
       category: product.category,
     })
   }
@@ -44,7 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <Link href={`/produto/${product.id}`}>
         <div className="relative aspect-square overflow-hidden bg-muted">
           <img
-            src={product.image || "/placeholder.svg"}
+            src={  product.imgs[0] && product.imgs[0].imgUrl  ? product.imgs[0].imgUrl : "/placeholder.svg"}
             alt={product.name}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -68,19 +56,19 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center gap-1">
           <div className="flex items-center">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <span className="ml-1 text-sm font-medium">{product.rating}</span>
+            <span className="ml-1 text-sm font-medium">{product.price}</span>
           </div>
-          <span className="text-xs text-muted-foreground">({product.reviews})</span>
+          <span className="text-xs text-muted-foreground">({product.price})</span>
         </div>
 
         <div className="flex flex-col gap-1">
-          {product.originalPrice && (
-            <span className="text-xs text-muted-foreground line-through">R$ {product.originalPrice.toFixed(2)}</span>
+          {product.price && (
+            <span className="text-xs text-muted-foreground line-through">R$ {Number(product.price).toFixed(2)}</span>
           )}
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-accent">R$ {product.price.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-accent">R$ {Number(product.price).toFixed(2)}</span>
           </div>
-          <span className="text-xs text-muted-foreground">ou 12x de R$ {(product.price / 12).toFixed(2)}</span>
+          <span className="text-xs text-muted-foreground">ou 12x de R$ {(Number(product.price) / 12).toFixed(2)}</span>
         </div>
 
         <Button className="w-full gap-2 bg-accent hover:bg-black" size="sm" onClick={handleAddToCart}>

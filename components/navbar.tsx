@@ -23,7 +23,7 @@ export function Navbar() {
   const { totalItems } = useCart()
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       {/* Top Bar */}
       <div className="bg-black text-secondary-foreground">
         <div className="container mx-auto px-4 py-2">
@@ -90,7 +90,7 @@ export function Navbar() {
               <Link
                 key={category.name}
                 href={category.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-sm font-bold text-muted-foreground transition-colors hover:text-primary"
               >
                 {category.name}
               </Link>
