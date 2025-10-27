@@ -5,12 +5,13 @@ export type productType = {
     price: string | number,
     offerPrice:string | number,
     category:string  ,
+    specifications:string | null 
     createdAt:string | Date,
     updatedAt:  string | Date,
     imgs: imgProductType[] | []
 }
 
-type imgProductType = {
+export type imgProductType = {
     id:number 
     productId:number 
     imgUrl: string 

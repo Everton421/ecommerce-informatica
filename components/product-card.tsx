@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
-import { productType } from "@/app/@types/product-type"
+import { imgProductType, productType } from "@/app/@types/product-type"
+import { useEffect, useState } from "react"
  
 
 interface ProductCardProps {
@@ -15,24 +16,42 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart()
-
+  const [ catalogImgProduct,setCatalogImgProduct ] = useState <imgProductType>();
   const discount = 0;
+  
   const handleAddToCart = () => {
+
+    function filterImg( ){
+      let img = "/placeholder.svg";
+      if(product.imgs.length > 0){
+         const auxImg = product.imgs.find( ( i )=> i.typeImg === 'catalog' && i.imgUrl != undefined);
+          if( auxImg && auxImg?.imgUrl != undefined ){
+              img = auxImg.imgUrl;
+          }
+        }
+        return img
+    }
+
     addItem({
       id: product.id,
       name: product.name,
       price:Number( product.price),
-      image: product.imgs && product.imgs[0].imgUrl,
+      image: filterImg(),
       category: product.category,
     })
   }
 
+useEffect(()=>{
+setCatalogImgProduct( product.imgs.find((i)=> i.typeImg === 'catalog' ))
+
+},[ product ])
+
   return (
     <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
-      <Link href={`/produto/${product.id}`}>
+      <Link href={`/product/${product.id}`}>
         <div className="relative aspect-square overflow-hidden bg-muted">
           <img
-            src={  product.imgs[0] && product.imgs[0].imgUrl  ? product.imgs[0].imgUrl : "/placeholder.svg"}
+             src={   catalogImgProduct   ? catalogImgProduct?.imgUrl  : "/placeholder.svg"}
             alt={product.name}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />

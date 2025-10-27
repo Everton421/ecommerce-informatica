@@ -91,7 +91,7 @@ export default function CartPage() {
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
                       <Link href={`/produto/${item.id}`}>
-                        <h3 className="font-semibold hover:text-primary">{item.name}</h3>
+                        <h3 className="font-semibold hover:text-accent">{item.name}</h3>
                       </Link>
                       <p className="text-sm text-muted-foreground">{item.category}</p>
                     </div>
@@ -119,11 +119,11 @@ export default function CartPage() {
                       {/* Price and Remove */}
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <div className="font-bold text-primary">R$ {(item.price * item.quantity).toFixed(2)}</div>
+                          <div className="font-bold text-accent">R$ {(item.price * item.quantity).toFixed(2)}</div>
                           <div className="text-xs text-muted-foreground">R$ {item.price.toFixed(2)} cada</div>
                         </div>
                         <Button variant="ghost" size="icon-sm" onClick={() => removeItem(item.id)}>
-                          <Trash2 className="h-4 w-4 text-destructive" />
+                          <Trash2 className="h-4 w-4 text-accent" />
                         </Button>
                       </div>
                     </div>
@@ -158,7 +158,7 @@ export default function CartPage() {
 
               <div className="flex justify-between text-lg font-bold">
                 <span>Total</span>
-                <span className="text-primary">R$ {(totalPrice + shippingCost).toFixed(2)}</span>
+                <span className="text-accent">R$ {(totalPrice + shippingCost).toFixed(2)}</span>
               </div>
 
               {totalPrice < 299 && (
@@ -177,7 +177,7 @@ export default function CartPage() {
               </div>
             </CardContent>
             <CardFooter className="flex-col gap-2">
-              <Button className="w-full" size="lg" onClick={handleCheckout}>
+              <Button  variant="outline" className="w-full bg-accent   text-white" onClick={handleCheckout}>
                 Finalizar Compra
               </Button>
               <Button variant="outline" className="w-full bg-transparent" asChild>
