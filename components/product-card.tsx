@@ -66,7 +66,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <span className="text-xs text-muted-foreground line-through">R$ {Number(product.price).toFixed(2)}</span>
           )}
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-accent">R$ {Number(product.price).toFixed(2)}</span>
+            <span className="text-2xl font-bold text-accent">R$ {Number(product.offerPrice).toFixed(2)}</span>
           </div>
           <span className="text-xs text-muted-foreground">ou 12x de R$ {(Number(product.price) / 12).toFixed(2)}</span>
         </div>

@@ -11,8 +11,9 @@ export type productType = {
 }
 
 type imgProductType = {
-    id:number,
-    productId:number,
-    imgUrl: string;
+    id:number 
+    productId:number 
+    imgUrl: string 
+    typeImg: 'specification' | 'catalog'
 }
  
