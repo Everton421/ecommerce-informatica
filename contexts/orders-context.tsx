@@ -2,24 +2,9 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
-import type { CartItem } from "./cart-context"
+import { Order, OrdersContextType } from "@/app/@types/order-type"
+import { CartItem } from "@/app/@types/cart-type"
 
-export interface Order {
-  id: string
-  date: string
-  items: CartItem[]
-  subtotal: number
-  shipping: number
-  total: number
-  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
-  trackingCode?: string
-}
-
-interface OrdersContextType {
-  orders: Order[]
-  addOrder: (items: CartItem[], subtotal: number, shipping: number) => void
-  getOrder: (id: string) => Order | undefined
-}
 
 const OrdersContext = createContext<OrdersContextType | undefined>(undefined)
 
@@ -43,23 +28,22 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("orders", JSON.stringify(orders))
   }, [orders])
 
-  const addOrder = (items: CartItem[], subtotal: number, shipping: number) => {
+  const addOrder = (items: CartItem[], subtotal: number,  shipping: number) => {
     const newOrder: Order = {
-      id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       date: new Date().toISOString(),
       items: items.map((item) => ({ ...item })),
       subtotal,
       shipping,
       total: subtotal + shipping,
       status: "pending",
-      trackingCode: `BR${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
     }
 
     setOrders((currentOrders) => [newOrder, ...currentOrders])
   }
 
   const getOrder = (id: string) => {
-    return orders.find((order) => order.id === id)
+    return orders.find((order) => order.tracking_id === id)
   }
 
   return <OrdersContext.Provider value={{ orders, addOrder, getOrder }}>{children}</OrdersContext.Provider>

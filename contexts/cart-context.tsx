@@ -3,25 +3,9 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast"
+import { CartContextType, CartItem } from "@/app/@types/cart-type"
 
-export interface CartItem {
-  id: number
-  name: string
-  price: number
-  image: string
-  category: string
-  quantity: number
-}
 
-interface CartContextType {
-  items: CartItem[]
-  addItem: (item: Omit<CartItem, "quantity">) => void
-  removeItem: (id: number) => void
-  updateQuantity: (id: number, quantity: number) => void
-  clearCart: () => void
-  totalItems: number
-  totalPrice: number
-}
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
@@ -46,10 +30,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("cart", JSON.stringify(items))
   }, [items])
 
-  const addItem = (item: Omit<CartItem, "quantity">) => {
+  const addItem = (item: CartItem) => {
     setItems((currentItems) => {
       const existingItem = currentItems.find((i) => i.id === item.id)
-
       if (existingItem) {
         toast({
           title: "Quantidade atualizada",
@@ -97,7 +80,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  
+  const totalPrice = items.reduce((sum, item) =>  
+    {
+      const usePrice = item.offerPrice > 0  ?  item.offerPrice : item.price
+       return sum + usePrice * item.quantity
+      } , 0)
 
   return (
     <CartContext.Provider

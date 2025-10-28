@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { useOrders } from "@/contexts/orders-context"
+import { useEffect } from "react"
 
 const statusConfig = {
   pending: { label: "Pendente", color: "bg-yellow-500" },
@@ -18,6 +19,10 @@ const statusConfig = {
 
 export default function OrdersPage() {
   const { orders } = useOrders()
+  
+  useEffect(()=>{
+    console.log(orders)
+  },[ orders] )
 
   if (orders.length === 0) {
     return (
@@ -51,11 +56,11 @@ export default function OrdersPage() {
           const status = statusConfig[order.status]
 
           return (
-            <Card key={order.id}>
+            <Card key={order.tracking_id}>
               <CardHeader>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-1">
-                    <CardTitle className="text-lg">Pedido #{order.id}</CardTitle>
+                    <CardTitle className="text-lg">Pedido #{order.tracking_id}</CardTitle>
                     <p className="text-sm text-muted-foreground">
                       Realizado em {orderDate.toLocaleDateString("pt-BR")} às {orderDate.toLocaleTimeString("pt-BR")}
                     </p>
@@ -111,13 +116,13 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Tracking Info */}
-                {order.trackingCode && (
+                {order.tracking_id && (
                   <div className="rounded-lg bg-muted p-4">
                     <div className="flex items-center gap-2">
                       <Package className="h-5 w-5 text-muted-foreground" />
                       <div>
                         <p className="text-sm font-medium">Código de Rastreamento</p>
-                        <p className="text-sm text-muted-foreground">{order.trackingCode}</p>
+                        <p className="text-sm text-muted-foreground">{order.tracking_id}</p>
                       </div>
                     </div>
                   </div>
@@ -126,7 +131,7 @@ export default function OrdersPage() {
                 {/* Actions */}
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <Button variant="outline" className="flex-1 bg-transparent" asChild>
-                    <Link href={`/pedidos/${order.id}`}>
+                    <Link href={`/pedidos/${order.tracking_id}`}>
                       Ver Detalhes
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>

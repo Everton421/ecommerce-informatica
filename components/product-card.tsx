@@ -33,11 +33,13 @@ export function ProductCard({ product }: ProductCardProps) {
     }
 
     addItem({
+      quantity:1,
       id: product.id,
       name: product.name,
       price:Number( product.price),
+      offerPrice: Number( product.offerPrice),
       image: filterImg(),
-      category: product.category,
+      category: product.category
     })
   }
 

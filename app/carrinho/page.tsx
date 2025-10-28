@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/contexts/cart-context"
 import { useOrders } from "@/contexts/orders-context"
 import { useToast } from "@/hooks/use-toast"
+import { useEffect } from "react"
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart()
@@ -19,7 +20,7 @@ export default function CartPage() {
   const shippingCost = totalPrice >= 299 ? 0 : 29.9
 
   const handleCheckout = () => {
-    addOrder(items, totalPrice, shippingCost)
+    addOrder(items, totalPrice,  shippingCost)
     clearCart()
 
     toast({
@@ -29,6 +30,10 @@ export default function CartPage() {
 
     router.push("/pedidos")
   }
+
+  useEffect(()=>{
+    console.log(items)
+  },[items])
 
   if (items.length === 0) {
     return (
