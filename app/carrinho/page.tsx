@@ -10,29 +10,58 @@ import { useCart } from "@/contexts/cart-context"
 import { useOrders } from "@/contexts/orders-context"
 import { useToast } from "@/hooks/use-toast"
 import { useEffect } from "react"
+import { api } from "@/services/api"
+import { Order } from "../@types/order-type"
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart()
   const { addOrder } = useOrders()
   const { toast } = useToast()
   const router = useRouter()
-
+   
   const shippingCost = totalPrice >= 299 ? 0 : 29.9
+ 
+  const handleCheckout = async () => {
 
-  const handleCheckout = () => {
-    addOrder(items, totalPrice,  shippingCost)
-    clearCart()
+     
+    
+    //  addOrder(items, totalPrice,  shippingCost)
 
-    toast({
-      title: "Pedido realizado com sucesso!",
-      description: "Você pode acompanhar seu pedido na página de pedidos",
-    })
+    const newOrder: Order = {
+      tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      date: new Date().toISOString(),
+      items: items.map((item) => ({ ...item })),
+      subtotal:totalPrice,
+      shipping:shippingCost,
+      total: totalPrice + shippingCost,
+      status: "pending",
+    }
+    console.log(newOrder)
+    //clearCart()
 
-    router.push("/pedidos")
+    //toast({
+    //  title: "Pedido realizado com sucesso!",
+    //  description: "Você pode acompanhar seu pedido na página de pedidos",
+    //})
+ 
+     try{  
+         const resultPostOrder = await api.post('/orders',{
+      tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      date: new Date().toISOString(),
+      items: items.map((item) => ({ ...item })),
+      subtotal:totalPrice,
+      shipping:shippingCost,
+      total: totalPrice + shippingCost,
+      status: "pending",
+         })
+       }catch( e ){ 
+         console.log(e)
+       }
+    //router.push("/pedidos")
   }
 
   useEffect(()=>{
-    console.log(items)
+    console.log("Items: ", items)
   },[items])
 
   if (items.length === 0) {
@@ -124,8 +153,8 @@ export default function CartPage() {
                       {/* Price and Remove */}
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <div className="font-bold text-accent">R$ {(item.price * item.quantity).toFixed(2)}</div>
-                          <div className="text-xs text-muted-foreground">R$ {item.price.toFixed(2)} cada</div>
+                          <div className="font-bold text-accent">R$ {   (item.quantity * item.offerPrice > 0 ? item.offerPrice : item.price).toFixed(2) }</div>
+                          <div className="text-xs text-muted-foreground">R$ { (item.offerPrice > 0 ? item.offerPrice : item.price).toFixed(2)} cada</div>
                         </div>
                         <Button variant="ghost" size="icon-sm" onClick={() => removeItem(item.id)}>
                           <Trash2 className="h-4 w-4 text-accent" />
