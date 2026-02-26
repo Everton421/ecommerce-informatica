@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast"
 import { useEffect } from "react"
 import { api } from "@/services/api"
 import { Order } from "../@types/order-type"
+import { CartItem } from "../@types/cart-type"
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart()
@@ -21,42 +22,60 @@ export default function CartPage() {
    
   const shippingCost = totalPrice >= 299 ? 0 : 29.9
  
-  const handleCheckout = async () => {
 
-     
+
+  const handleCheckout = async () => {
     
     //  addOrder(items, totalPrice,  shippingCost)
+    let orderItens  =[]
+    for ( const i of items ){
 
-    const newOrder: Order = {
+        orderItens.push({
+          quantity: i.quantity,
+           offerPrice: 1,  //Number(i.offerPrice),
+           name: i.name,
+           productId: 1, //Number(i.id),
+           price: 1 , //Number(i.price),
+        }) 
+    }
+
+    const newOrder    = {
       tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       date: new Date().toISOString(),
-      items: items.map((item) => ({ ...item })),
+      //items: orderItens,
       subtotal:totalPrice,
       shipping:shippingCost,
       total: totalPrice + shippingCost,
       status: "pending",
+      addres:1,
+      userId:1
     }
-    console.log(newOrder)
+    //console.log(newOrder)
     //clearCart()
 
     //toast({
     //  title: "Pedido realizado com sucesso!",
     //  description: "Você pode acompanhar seu pedido na página de pedidos",
     //})
- 
+  
      try{  
-         const resultPostOrder = await api.post('/orders',{
-      tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      date: new Date().toISOString(),
-      items: items.map((item) => ({ ...item })),
-      subtotal:totalPrice,
-      shipping:shippingCost,
-      total: totalPrice + shippingCost,
-      status: "pending",
-         })
+         const resultPostOrder = await api.post('/orders',  
+          {
+            tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            date: new Date().toISOString(),
+            items: orderItens,
+            subtotal:totalPrice,
+            shipping:shippingCost,
+            total: totalPrice + shippingCost,
+            status: "pending",
+            addres:1,
+            userId:1
+          }
+         )
        }catch( e ){ 
          console.log(e)
-       }
+       } 
+       
     //router.push("/pedidos")
   }
 
