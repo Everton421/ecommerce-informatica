@@ -1,27 +1,23 @@
-"use client"
-
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react"
+'use client'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/contexts/cart-context"
 import { useOrders } from "@/contexts/orders-context"
 import { useToast } from "@/hooks/use-toast"
-import { useEffect } from "react"
 import { api } from "@/services/api"
-import { Order } from "../@types/order-type"
-import { CartItem } from "../@types/cart-type"
-
+import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from 'next/navigation'
+ 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart()
   const { addOrder } = useOrders()
   const { toast } = useToast()
-  const router = useRouter()
    
   const shippingCost = totalPrice >= 299 ? 0 : 29.9
  
+const router = useRouter()
 
 
   const handleCheckout = async () => {
@@ -31,25 +27,27 @@ export default function CartPage() {
     for ( const i of items ){
 
         orderItens.push({
-          quantity: i.quantity,
-           offerPrice: 1,  //Number(i.offerPrice),
-           name: i.name,
-           productId: 1, //Number(i.id),
-           price: 1 , //Number(i.price),
+            "productId": Number(i.id),
+            "quantity": i.quantity,
+            "name": i.name,
+            "price":    Number(i.price),
+            "offerPrice":  Number(i.offerPrice),
         }) 
+
+ 
     }
 
-    const newOrder    = {
-      tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      date: new Date().toISOString(),
-      //items: orderItens,
-      subtotal:totalPrice,
-      shipping:shippingCost,
-      total: totalPrice + shippingCost,
-      status: "pending",
-      addres:1,
-      userId:1
-    }
+     const newOrder    = {
+       tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+       date: new Date().toISOString(),
+       items: orderItens,
+       subtotal:totalPrice,
+       shipping:shippingCost,
+       total: totalPrice + shippingCost,
+       status: "pending",
+       addres:1,
+       userId:1
+     }
     //console.log(newOrder)
     //clearCart()
 
@@ -57,31 +55,24 @@ export default function CartPage() {
     //  title: "Pedido realizado com sucesso!",
     //  description: "Você pode acompanhar seu pedido na página de pedidos",
     //})
-  
+     
+    console.log(newOrder)  
      try{  
          const resultPostOrder = await api.post('/orders',  
-          {
-            tracking_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-            date: new Date().toISOString(),
-            items: orderItens,
-            subtotal:totalPrice,
-            shipping:shippingCost,
-            total: totalPrice + shippingCost,
-            status: "pending",
-            addres:1,
-            userId:1
-          }
+          newOrder
          )
+         console.log(resultPostOrder.data)
+         if(resultPostOrder.status === 201 ){
+          const url =  resultPostOrder.data.checkout_url;
+            router.push(url);
+         }
        }catch( e ){ 
          console.log(e)
-       } 
+       }  
        
     //router.push("/pedidos")
   }
 
-  useEffect(()=>{
-    console.log("Items: ", items)
-  },[items])
 
   if (items.length === 0) {
     return (
